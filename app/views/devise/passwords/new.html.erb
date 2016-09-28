@@ -1,0 +1,25 @@
+<div class="col-md-12">
+
+  <div class="text-center">
+    <h1 class="cover-heading">Tubefedzt</h1>
+    <p class="lead">Please enter your email:</p>
+  </div>
+
+  <div class="col-center">
+    <div class="center-adjust">
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+        <%= devise_error_messages! %>
+        <div class="field adjust-field">
+          <%= f.email_field :email, placeholder: "Email", autofocus: true %>
+        </div>
+        <div class="btn-submit btn btn-lg btn-default btn-info">
+          <%= f.submit "Reset password" %>
+        </div>
+      <% end %>
+
+      <div class="adjust-field">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>

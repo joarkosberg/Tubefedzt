@@ -1,0 +1,62 @@
+<div>
+  <% @isEmpty = @songs.first.nil? %>
+  <p id="notice"><%= notice %></p>
+
+  <!-- Header -->
+  <h1 class="text-center party-header">
+    <% if @isEmpty %>
+        <span class="normalText">You need to add some songs, dude!</span>
+    <% else %>
+        <span class="normalText">Currently playing:</span>
+        <span class="songTitle"><%= @songs.first.title.to_s[0..50] %></span>
+    <% end %>
+  </h1>
+
+  <% unless @isEmpty %>
+    <!-- Wrapper -->
+    <div>
+      <!-- Player -->
+      <div id="party-player" class="col-xs-12 col-md-5 col-lg-5"></div>
+
+      <!-- Song List -->
+      <div class="col-xs-12 col-md-7 col-lg-7">
+          <span id="top_songs_list"> <% render partial: 'layouts/top_songs_list', locals:  {songs: @songs} %></span>
+      </div>
+    </div>
+
+    <!-- Youtube player script -->
+    <script async="true">
+      var tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('party-player', {
+          videoId: '<%= load_video @songs.first %>',
+          height: '418',
+          width: '480',
+          playerVars: {
+            autoplay: 1,
+            vq: 'hd1080'},
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      function onPlayerStateChange(event) {
+        if(event.data == YT.PlayerState.ENDED){
+          location.reload()
+        }
+      }
+    </script>
+
+      <%= javascript_include_tag :refresh_top_songs %>
+  <% end %>
+</div>

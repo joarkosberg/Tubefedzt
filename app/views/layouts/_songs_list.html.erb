@@ -1,0 +1,53 @@
+<div>
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Song</th>
+          <th>Points</th>
+          <% if current_user.admin? %>
+            <th>Admin</th>
+          <% end %>
+        </tr>
+      </thead>
+
+      <tbody>
+      <% @songs.each_with_index do |song,index| %>
+          <tr>
+            <td>
+              <img class="song-picture" src="http://img.youtube.com/vi/<%= song.link %>/0.jpg" height="50">
+              <span class="song-title"><%= song.title %></span>
+            </td>
+
+            <td class="cell-vote">
+                  <%= song.votes.count == 0 ? "No votes" : song.votes.sum(:positive).to_s + " points" %>
+                <%unless current_user.votes.where('song_id = ?', song.id).count > 0 && !current_user.admin? %>
+                    <div>
+                      <%= link_to(image_tag("https://s3-us-west-2.amazonaws.com/tubefedzt-assets/plus.png",
+                                          size: '43', alt: 'Upvote'),
+                                  votes_path(:user_id => current_user.id, :song_id => song.id, :positive => 1),
+                                  class: 'add_padding', method: :post, id: "songUpvote#{index}") %>
+                      <%= link_to(image_tag("https://s3-us-west-2.amazonaws.com/tubefedzt-assets/minus.png",
+                                            size: '43', alt: 'Downvote'),
+                                  votes_path(:user_id => current_user.id, :song_id => song.id, :positive => -1),
+                                  method: :post, id: "songDownvote#{index}") %>
+                    </div>
+                <% else %>
+                  <div style="width: 91px; height: 43px">
+                  </div>
+                  <% end %>
+            </td>
+
+            <% if can? :manage, @song %>
+              <td class="column-admin">
+                <%= link_to 'Pre-listen', song, class: "btn btn-default btn-info btn-crud" %>
+                <%= link_to 'Edit', edit_song_path(song), class: "btn btn-default btn-info btn-crud" %>
+                <%= link_to 'Remove', song, class: "btn btn-default btn-info btn-crud", method: :delete, data: { confirm: 'Are you sure?' } %>
+              </td>
+            <% end %>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<ul class="nav navbar-nav">
+  <% if can? :manage, :song %>
+      <li class="<%= 'active' if params[:action] == 'party' %>"><%= link_to('Party', songs_party_path) %></li>
+  <% end %>
+  <li class="<%= 'active' if params[:controller] == 'songs' && params[:action] == 'index' %>">
+    <%= link_to('Vote', songs_path) %></li>
+  <li class="<%= 'active' if params[:action] == 'user' %>"><%= link_to('User', pages_user_path) %></li>
+</ul>

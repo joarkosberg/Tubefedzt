@@ -1,0 +1,18 @@
+<div>
+  <!-- Info Box -->
+  <div>
+    <p id="notice" class="notice-box"><%= notice %></p>
+  </div>
+
+  <!-- Song List -->
+  <span id="songs_list"> <% render partial: 'layouts/songs_list', locals:  {songs: @songs} %></span>
+
+  <!-- Close FB login window -->
+  <script type="text/javascript">
+    window.opener.location = '<%= @redirect_to %>';
+    window.close();
+  </script>
+
+  <!-- List refresher -->
+  <%= javascript_include_tag :refresh_songs %>
+</div>

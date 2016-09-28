@@ -1,0 +1,69 @@
+<div class="row">
+
+  <div class="col-xs-12 col-sm-6 col-md-6">
+    <div class="content-padded content-double">
+      <div class="profile"><%= get_profile_picture current_user %></div>
+      <h2><%= get_current_user %></h2>
+      <hr/>
+      <h2>Details</h2>
+      <ul>
+        <li><p class="text-muted">Email: <%= current_user.email %></p></li>
+        <li><p class="text-muted">Visits: <%= current_user.sign_in_count %></p></li>
+        <li><p class="text-muted">Account created: <%= current_user.created_at.strftime("%d.%m.%Y - %R") %></p></li>
+        <li><p class="text-muted">Last logged in: <%= current_user.last_sign_in_at.strftime("%d.%m.%Y - %R") %></p></li>
+        <li><p class="text-muted">Last logged in from: <%= current_user.last_sign_in_ip %></p></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-6">
+    <div class="content-padded">
+      <h2>Voting stats</h2>
+      <h3 class="upvote"><%= image_tag("https://s3-us-west-2.amazonaws.com/tubefedzt-assets/positive.png", width: 35) %>
+        <%= current_user.votes.where('positive = 1').count %> upvotes</h3>
+      <h3 class="downvote"><%= image_tag("https://s3-us-west-2.amazonaws.com/tubefedzt-assets/negative.png", width: 35) %>
+        <%= current_user.votes.where('positive = -1').count %> downvotes</h3>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-6">
+    <div class="content-padded text-center">
+      <% unless current_user.from_facebook? %>
+        <%= link_to 'My settings', edit_user_registration_path, class: "btn btn-lg btn-info btn-profile" %>
+      <% end %>
+      <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "btn btn-lg btn-info btn-profile" %>
+    </div>
+  </div>
+
+  <% if can? :manage, :song %>
+      <!-- Make admin div wrap -->
+      <div class="col-xs-12 col-sm-12 col-md-12"></div>
+
+      <div class="col-xs-12 col-sm-6 col-md-6 admin-panel">
+        <div class="content-padded">
+          <h2>Send mail</h2>
+          <span style="color:red"><%= notice %></span>
+          <p>Send mail to all users of Tubefedzt</p>
+          <button class="btn btn-lg btn-info" id="collapsible" type="button" data-toggle="collapse"
+                  data-target="#sendmail" aria-expanded="false" aria-controls="sendmail">
+            Show
+          </button>
+
+          <div class="collapse" id="sendmail">
+            <%= form_tag(send_mail_path, method: "POST") do %>
+                <div class="form-group admin-mail-form">
+                  <%= text_field_tag :subject, nil, placeholder: 'Subject',
+                                     class: 'form-control admin-form-padding' %>
+                  <%= text_area_tag :message, nil, placeholder: 'Message',
+                                    class: 'form-control admin-form-padding', rows: 6 %>
+                  <%= submit_tag("Send", class: 'btn btn-default btn-info admin-form-padding') %>
+                </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+  <% end %>
+
+  <!-- Change button text -->
+  <%= javascript_include_tag :admin_mail %>
+</div>

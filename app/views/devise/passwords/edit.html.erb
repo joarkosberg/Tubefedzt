@@ -1,0 +1,33 @@
+<div class="col-md-12">
+  <div class="col-center">
+
+    <div class="text-center">
+      <h1 class="cover-heading">Tubefedzt</h1>
+      <p class="adjust-field">Don't trust nobody!</p>
+    </div>
+
+    <div class="center-adjust">
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+        <%= devise_error_messages! %>
+        <%= f.hidden_field :reset_password_token %>
+
+        <div class="field adjust-field">
+          <%= f.password_field :password, autofocus: true, autocomplete: "off",
+                               placeholder: "Password (" + @minimum_password_length.to_s + " character minimum)"%>
+        </div>
+
+        <div class="field adjust-field">
+          <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Password confirmation" %>
+        </div>
+
+        <div class="btn-submit btn btn-lg btn-default btn-info">
+          <%= f.submit "Change my password" %>
+        </div>
+      <% end %>
+
+      <div class="adjust-field">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -16,6 +16,7 @@
 # Enviroment variables
 /config/local_env.yml
 /config/secrets.yml
+/config/aws.yml
 
 # Coverage folder
 /coverage/

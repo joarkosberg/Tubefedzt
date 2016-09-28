@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Load fonts from typekit -->
+  <%= google_webfonts_init({
+      typekit: 'zkr3ean'
+   }) %>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>TubeFedzt</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+
+  <!-- Set theme color for mobile devices -->
+  <meta name="theme-color" content="#0c95cf">
+  <meta name="msapplication-navbutton-color" content="#0c95cf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#0c95cf">
+</head>
+
+<body>
+  <% if current_user %>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <% if current_user %>
+            <%= link_to 'TubeFedzt', songs_path, class: "navbar-brand" %>
+        <% else %>
+            <%= link_to 'TubeFedzt', root_path, class: "navbar-brand" %>
+        <% end %>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <%= render 'layouts/menu' %>
+
+        <div class="greeting-user navbar-right hidden-sm hidden-xs">
+          <%= link_to greet_user, pages_user_path %>
+        </div>
+
+        <%= form_tag(user_search_path, method: "POST", class: "navbar-form navbar-right") do %>
+            <div class="form-group">
+              <%= text_field_tag :searchWord, 'Search for song',
+                                 onclick: 'if($(this).val()=="Search for song"){$(this).val("");};',
+                                 class: 'form-control' %>
+            </div>
+            <%= submit_tag("Search", class: 'btn btn-default btn-info') %>
+        <% end %>
+      </div>
+    </div>
+  </nav>
+<% end%>
+
+  <div class="container">
+    <%= yield %>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</body>
+</html>

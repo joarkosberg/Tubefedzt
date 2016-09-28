@@ -1,0 +1,52 @@
+<div class="col-md-12">
+  <div class="text-center">
+
+    <h1 class="cover-heading">Tubefedzt</h1>
+    <p class="lead">Welcome to the musical democracy!</p>
+
+    <div class="col-center">
+    <% unless alert.nil? %>
+      <div class="alert alert-warning">
+        <div class="alert-content">
+          <p class="alert"><%= alert %></p>
+        </div>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      </div>
+      <% end %>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class="field">
+            <%= f.email_field :email, autofocus: true, placeholder: "Email", size: 30 %>
+          </div>
+          <div class="field">
+            <%= f.password_field :password, placeholder: "Password", autocomplete: "off", size: 30 %>
+          </div>
+          <% if devise_mapping.rememberable? -%>
+              <div class="field">
+                <%= f.check_box :remember_me %>
+                <%= f.label :remember_me %>
+              </div>
+          <% end -%>
+          <div class="btn-submit btn btn-lg btn-default btn-info">
+            <%= f.submit "Log in" %>
+          </div>
+      <% end %>
+
+      <div class="adjust-field">
+        <%= render "devise/shared/links" %>
+      </div>
+
+      <script>
+        function popupCenter(url, width, height, name) {
+          var left = (screen.width/2)-(width/2);
+          var top = (screen.height/2)-(height/2);
+          return window.open(url, name, "menubar=no,toolbar=no,status=no,width="+width+",height="+height+",toolbar=no,left="+left+",top="+top);
+        }
+
+        $("a.popup").click(function(e) {
+          popupCenter($(this).attr("href"), $(this).attr("data-width"), $(this).attr("data-height"), "authPopup");
+          e.stopPropagation(); return false;
+        });
+      </script>
+      </div>
+  </div>
+</div>

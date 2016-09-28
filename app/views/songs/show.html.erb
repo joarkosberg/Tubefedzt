@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+<% @extra = @song.title.length < 50 ? '' : '...'%>
+
+<h1 class="title-header">
+  <%= @song.title[0..50] + @extra %>
+</h1>
+
+<div class="col-xs-12" id="song-preview">
+</div>
+
+<div class="col-xs-12 col-md-12 text-center">
+  <%= link_to 'Edit', edit_song_path(@song), class: "btn btn-default btn-lg btn-info btn-show" %>
+</div>
+
+<!-- Youtube player script -->
+<script async="true">
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('song-preview', {
+      videoId: '<%= @song.link %>',
+      height: '480',
+      width: '720',
+      playerVars: {
+        autoplay: 1,
+        vq: 'hd1080'},
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  function onPlayerReady(event) {
+    event.target.playVideo();
+  }
+
+  function onPlayerStateChange(event) {
+  }
+</script>

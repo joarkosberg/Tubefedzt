@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+vote1:
+  song: song1
+  user: user2
+  positive: true
+
+vote2:
+  song: song1
+  user: user1
+  positive: true

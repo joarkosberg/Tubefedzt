@@ -1,0 +1,23 @@
+<table class="table">
+
+  <thead>
+  <tr>
+    <th>Top Songs</th>
+    <th>Points</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @songs.take(5).each do |song| %>
+      <tr>
+          <td>
+            <img class="song-picture" src="http://img.youtube.com/vi/<%= song.link %>/0.jpg" width="88px"/>
+            <span class="song-title"> <%= song.title.to_s[0..40] %> </span>
+          </td>
+          <td class="vote-count-party" style="vertical-align: middle;">
+            <%= song.votes.count == 0 ? "No votes" : song.votes.sum(:positive).to_s + " points" %>
+          </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

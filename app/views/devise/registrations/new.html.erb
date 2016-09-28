@@ -1,0 +1,48 @@
+<div class="col-md-12">
+
+  <div class ="text-center">
+    <h1 class="cover-heading">Tubefedzt</h1>
+    <p class="lead">Begin a musical democracy!</p>
+  </div>
+
+  <div class="col-center">
+      <div>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), multipart: true) do |f| %>
+          <%= devise_error_messages! %>
+          <div class="field adjust-field">
+            <%= f.label :profile_picture %>
+            <%= f.file_field :profile_picture %>
+          </div>
+
+          <div class="field adjust-field">
+            <%= f.text_field :first_name, placeholder: "First name", autofocus: true %>
+          </div>
+
+          <div class="field adjust-field">
+            <%= f.text_field :last_name, placeholder: "Last name" %>
+          </div>
+
+          <div class="field adjust-field">
+            <%= f.email_field :email, placeholder: "Email" %>
+          </div>
+
+          <div class="field adjust-field">
+            <%= f.password_field :password, autocomplete: "off",
+                                 placeholder: "Password (" + @minimum_password_length.to_s + " character minimum)"%>
+          </div>
+
+          <div class="field adjust-field">
+            <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Password confirmation" %>
+          </div>
+
+          <div class="btn-submit btn btn-lg btn-default btn-info">
+            <%= f.submit "Sign up" %>
+          </div>
+        <% end %>
+
+        <div class="adjust-field">
+          <%= render "devise/shared/links" %>
+        </div>
+      </div>
+  </div>
+</div>
